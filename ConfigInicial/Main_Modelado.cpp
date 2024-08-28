@@ -254,7 +254,7 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		//Patas traseras del perro
-		model = glm::translate(model, glm::vec3(-0.1875f, 0.625f, 0.5f));
+		model = glm::translate(model, glm::vec3(-0.2f, 0.625f, 0.5f));
 		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)); //Bien
 		model = glm::scale(model, glm::vec3(0.6f, 0.2f, 2.0f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
