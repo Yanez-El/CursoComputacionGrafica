@@ -196,41 +196,64 @@ int main() {
 	
 
 		glBindVertexArray(VAO);
-	
+		
+		//Cabeza del perro
 	    model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(3.0f, 0.1f, 2.0f)); //Ancho, grosor, profundidad
-		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
-
+		//Orejas del perro
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f)); //Tamaño de la pata
-		model = glm::translate(model, glm::vec3(9.9f, -0.6f, 2.9f)); //Posiciona la pata
+		model = glm::translate(model, glm::vec3(-0.6251f, 0.25f, -0.25f));
+		model = glm::scale(model, glm::vec3(0.25f, 0.75f, 0.25f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(5.001f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(1.0f, -0.125f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(-7.001f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Hocico del perro
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -0.25f, 0.6251f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.25f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, -0.25f, 1.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.5f, 1.0f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Cuerpo del perro
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.5f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(1.5f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		
-		//Pata 2
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f)); //Tamaño de la pata
-		model = glm::translate(model, glm::vec3(-9.9f, -0.6f, 2.9f)); //Posiciona la pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		//Pata 3
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f)); //Tamaño de la pata
-		model = glm::translate(model, glm::vec3(-9.9f, -0.6f, -2.9f)); //Posiciona la pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		//Pata 4
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f)); //Tamaño de la pata
-		model = glm::translate(model, glm::vec3(9.9f, -0.6f, -2.9f)); //Posiciona la pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
 		glBindVertexArray(0);
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
