@@ -199,8 +199,67 @@ int main() {
 		
 		//Cabeza del perro
 	    model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(1.0f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-1.0f, 0.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(1.0f, 0.75f, 1.25f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(0.0f, 0.1667f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Parte izquierda de la cara
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.375f, 0.5f, 0.375f));
+		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-1.0f, 0.0f, 0.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.5f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 2.0f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.75f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Parte derecha de la cara
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-0.375f, 0.5f, 0.375f));
+		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(-1.0f, 0.0f, 0.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.5f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 2.0f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.75f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, -1.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Parte central delantera de la cabeza
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.375f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(0.25f, 1.25f, 0.5f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
@@ -208,35 +267,38 @@ int main() {
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-0.6251f, 0.25f, -0.25f));
 		model = glm::scale(model, glm::vec3(0.25f, 0.75f, 0.25f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Bien
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		model = glm::translate(model, glm::vec3(5.001f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-5.001f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		model = glm::translate(model, glm::vec3(1.0f, -0.125f, 0.0f));
+		model = glm::translate(model, glm::vec3(-1.0f, -0.125f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.25f, 1.0f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		model = glm::translate(model, glm::vec3(-7.001f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(7.001f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		//Hocico del perro
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -0.25f, 0.6251f));
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.25f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(0.0f, -0.125f, 0.6251f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(0.25f, 0.5f, 0.5f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		model = glm::translate(model, glm::vec3(0.0f, -0.25f, 1.0f));
+		model = glm::translate(model, glm::vec3(-1.0f, -0.25f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 0.5f, 1.0f)); //Ancho, grosor, profundidad
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f)); //Bien
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -254,9 +316,63 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		//Patas traseras del perro
-		model = glm::translate(model, glm::vec3(-0.2f, 0.625f, 0.5f));
-		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)); //Bien
-		model = glm::scale(model, glm::vec3(0.6f, 0.2f, 2.0f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(-0.2f, 0.6f, 0.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(0.6f, 2.0f, 0.2f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::scale(model, glm::vec3(0.6f, 0.5f, 1.0f)); //Ancho, grosor, profundidad
+		model = glm::translate(model, glm::vec3(-0.333f, 1.5f, 0.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, -6.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(-0.25f, 0.0f, -1.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f)); //Ancho, grosor, profundidad
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Bien
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 6.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Patas Delanteras del perro
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.5f, -1.125f, 0.625f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)); //Bien
+		model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.5f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));	
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.25f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f)); //Ancho, grosor, profundidad
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
@@ -289,9 +405,9 @@ int main() {
 	 if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		 movZ += 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		 rot += 0.4f;
+		 rot += 0.8f;
 	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		 rot -= 0.4f;
+		 rot -= 0.8f;
  }
 
 
