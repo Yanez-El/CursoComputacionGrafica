@@ -1,3 +1,9 @@
+/*
+    Práctica 5 Carga de modelos
+    Fernando Yañez García
+    X de  septiembre de 2024
+*/
+
 // Std. Includes
 #include <string>
 
@@ -54,7 +60,7 @@ int main( )
     glfwWindowHint( GLFW_RESIZABLE, GL_FALSE );
     
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow *window = glfwCreateWindow( WIDTH, HEIGHT, "Carga de modelos y camara sintetica", nullptr, nullptr );
+    GLFWwindow *window = glfwCreateWindow( WIDTH, HEIGHT, "Carga de modelos y camara sintetica Fernando", nullptr, nullptr );
     
     if ( nullptr == window )
     {
@@ -94,8 +100,9 @@ int main( )
     Shader shader( "Shader/modelLoading.vs", "Shader/modelLoading.frag" );
     
     // Load models
-    Model dog((char*)"Models/RedDog.obj");
+    Model dog((char*)"Models/RedDog.obj"); //Perro
     Model moto((char*)"Models/Tron/633a1f95f532_Tron_bike_min.obj");
+    Model pImpacto((char*)"Models/pImpacto/uploads_files_3918379_impact+wrench+(OBJ).obj"); //Pistola de impacto
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
   
@@ -131,6 +138,11 @@ int main( )
         model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         moto.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        pImpacto.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
