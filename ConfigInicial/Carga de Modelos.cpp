@@ -1,7 +1,7 @@
 /*
     Práctica 5 Carga de modelos
     Fernando Yañez García
-    X de  septiembre de 2024
+    X de septiembre de 2024
 */
 
 // Std. Includes
@@ -101,8 +101,11 @@ int main( )
     
     // Load models
     Model dog((char*)"Models/RedDog.obj"); //Perro
-    Model moto((char*)"Models/Tron/633a1f95f532_Tron_bike_min.obj");
-    Model pImpacto((char*)"Models/pImpacto/uploads_files_3918379_impact+wrench+(OBJ).obj"); //Pistola de impacto
+    Model pImpacto((char*)"Models/pImpacto/Pistola.obj"); //Pistola de impacto
+    Model Llantas((char*)"Models/Corvette/Llantas.obj"); //Llantas
+    Model Llave((char*)"Models/Llave/Llave.obj"); //Llantas
+    Model Desarmador((char*)"Models/Desarmador/Desarmador.obj"); //Llantas
+    Model CajaH((char*)"Models/Toolbox/c7df3d1bc141_a_red_toolbox__3d_a.obj"); //Llantas
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
   
@@ -133,16 +136,21 @@ int main( )
         glm::mat4 model(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         dog.Draw(shader);
-
-        model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        moto.Draw(shader);
-
-        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+        
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         pImpacto.Draw(shader);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Llantas.Draw(shader);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Llave.Draw(shader);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Desarmador.Draw(shader);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        CajaH.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
