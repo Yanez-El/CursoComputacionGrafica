@@ -1,3 +1,8 @@
+/*
+	Práctica 6 Texturizado
+	Fernando Yañez García
+	22 de septiembre de 2024
+*/
 
 #include <iostream>
 #include <cmath>
@@ -101,18 +106,51 @@ int main()
 	GLfloat vertices[] =
 	{
 		// Positions            // Colors              // Texture Coords
-		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.0f,
-		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		2.0f,0.0f,
-		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    2.0f,2.0f,
-		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,2.0f,
+		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.255f,
+		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.25f,0.255f,
+		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    0.25f,0.5055f,
+		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.5055f,
 
-		
+		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.256f,
+		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.256f,
+		0.5f,  0.5f, 1.0f,     1.0f, 1.0f,1.0f,	    0.75f,0.505f,
+		-0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.505f,
+
+		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.25f,0.25f,
+		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.5f,0.25f,
+		0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.51f,
+		-0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.25f,0.51f,
+
+		-0.5f, 0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.75f,0.25f,
+		0.5f, 0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		1.0f,0.25f,
+		0.5f, 0.5f, 0.0f,    1.0f, 1.0f,1.0f,		1.0f,0.51f,
+		-0.5f, 0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.51f,
+
+		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.5f,0.00625f,
+		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.00625f,
+		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    0.75f,0.25625f,
+		0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.25625f,
+
+		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.255f,
+		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.256f,
+		-0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.505f,
+		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.5055f,
 	};
 
 	GLuint indices[] =
 	{  // Note that we start from 0!
 		0,1,3,
-		1,2,3
+		1,2,3,
+		4,5,7,
+		5,6,7,
+		8,9,11,
+		9,10,11,
+		12,13,15,
+		13,14,15,
+		16,17,19,
+		17,18,19,
+		20,21,23,
+		21,22,23
 	
 	};
 
@@ -136,7 +174,7 @@ int main()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
 	// Texture Coordinate attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(6 * sizeof(GLfloat)));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 	glBindVertexArray(0);
 
@@ -152,7 +190,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// Diffuse map
-	image = stbi_load("images/Papel.jpg", &textureWidth, &textureHeight, &nrChannels,0);
+	image = stbi_load("images/cubo.jpg", &textureWidth, &textureHeight, &nrChannels,0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -207,7 +245,30 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Draw the light object (using light's vertex attributes)
 		glBindVertexArray(VAO);
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(6 * sizeof(GLfloat)));
+
+		/*model = glm::translate(model, glm::vec3(0.0f, 0.5f, -0.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(12 * sizeof(GLfloat)));
+
+		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(18 * sizeof(GLfloat)));
+
+		/*model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(24 * sizeof(GLfloat)));
+
+		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(30 * sizeof(GLfloat)));
 		glBindVertexArray(0);
 
 		// Swap the screen buffers
