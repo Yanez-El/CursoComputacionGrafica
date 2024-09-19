@@ -1,7 +1,7 @@
 /*
 	Práctica 6 Texturizado
 	Fernando Yañez García
-	22 de septiembre de 2024
+	19 de septiembre de 2024
 */
 
 #include <iostream>
@@ -62,7 +62,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Texturizado", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Texturizado Fernando", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -116,25 +116,25 @@ int main()
 		0.5f,  0.5f, 1.0f,     1.0f, 1.0f,1.0f,	    0.75f,0.505f,
 		-0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.505f,
 
-		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.25f,0.25f,
-		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.5f,0.25f,
-		0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.51f,
-		-0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.25f,0.51f,
+		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.25f,0.255f,
+		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.5f,0.255f,
+		0.5f, -0.5f, 0.0f,     1.0f, 1.0f,1.0f,		0.5f,0.5055f,
+		-0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.25f,0.5055f,
 
-		-0.5f, 0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.75f,0.25f,
-		0.5f, 0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		1.0f,0.25f,
-		0.5f, 0.5f, 0.0f,    1.0f, 1.0f,1.0f,		1.0f,0.51f,
-		-0.5f, 0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.51f,
+		-0.5f, 0.5f, 1.0f,     1.0f, 1.0f,1.0f,		0.75f,0.255f,
+		0.5f, 0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		1.0f,0.255f,
+		0.5f, 0.5f, 0.0f,      1.0f, 1.0f,1.0f,		1.0f,0.5055f,
+		-0.5f, 0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.5055f,
 
 		0.5f, -0.5f, 1.0f,	   1.0f, 1.0f,1.0f,		0.5f,0.00625f,
 		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.00625f,
 		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    0.75f,0.25625f,
-		0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.25625f,
+		0.5f,  0.5f, 1.0f,     1.0f, 1.0f,1.0f,		0.5f,0.25625f,
 
-		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.255f,
-		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.256f,
-		-0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.5f,0.505f,
-		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.5055f,
+		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.5055f,
+		-0.5f, -0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.75f,0.5055f,
+		-0.5f,  0.5f, 1.0f,    1.0f, 1.0f,1.0f,		0.75f,0.755f,
+		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.755f,
 	};
 
 	GLuint indices[] =
@@ -174,7 +174,7 @@ int main()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
 	// Texture Coordinate attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(6 * sizeof(GLfloat)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
 	glBindVertexArray(0);
 
@@ -247,27 +247,10 @@ int main()
 		glBindVertexArray(VAO);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(6 * sizeof(GLfloat)));
-
-		/*model = glm::translate(model, glm::vec3(0.0f, 0.5f, -0.5f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(12 * sizeof(GLfloat)));
-
-		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(18 * sizeof(GLfloat)));
-
-		/*model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.5f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(24 * sizeof(GLfloat)));
-
-		/*model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid*)(30 * sizeof(GLfloat)));
 		glBindVertexArray(0);
 
