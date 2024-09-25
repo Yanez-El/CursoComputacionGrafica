@@ -1,3 +1,9 @@
+/*
+    Práctica 7 Materiales e iluminación
+    Fernando Yañez García
+    X de septiembre de 2024
+*/
+
 
 // Std. Includes
 #include <string>
@@ -43,8 +49,10 @@ glm::vec3 lightPos(0.5f, 0.5f, 2.5f);
 float movelightPos = 0.0f;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
-float rot = 0.0f;
-bool activanim = false;
+bool noche = false;
+bool dia = true;
+bool movimiento = false;
+float rot = 0.0;
 
 int main()
 {
@@ -103,7 +111,12 @@ int main()
 
     // Load models
     Model red_dog((char*)"Models/RedDog.obj");
-    Model moto((char*)"Models/Tron/633a1f95f532_Tron_bike_min.obj");
+    Model pImpacto((char*)"Models/pImpacto/Pistola.obj"); //Pistola de impacto
+    Model Llantas((char*)"Models/Corvette/Llantas.obj"); //Llantas
+    Model Llave((char*)"Models/Llave/Llave.obj"); //Llantas
+    Model Desarmador((char*)"Models/Desarmador/Desarmador.obj"); //Llantas
+    Model CajaH((char*)"Models/Toolbox/c7df3d1bc141_a_red_toolbox__3d_a.obj"); //Llantas
+    Model Sol((char*)"Models/Sol/Sol.obj"); //Llantas
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
     float vertices[] = {
@@ -212,15 +225,21 @@ int main()
         lightingShader.Use();
         GLint lightPosLoc = glGetUniformLocation(lightingShader.Program, "light.position");
         GLint viewPosLoc = glGetUniformLocation(lightingShader.Program, "viewPos");
-        glUniform3f(lightPosLoc, lightPos.x + movelightPos, lightPos.y + movelightPos, lightPos.z + movelightPos);
+        glUniform3f(lightPosLoc, lightPos.x + movelightPos, lightPos.y, lightPos.z);
         glUniform3f(viewPosLoc, camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 
 
         // Set lights properties
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient" ), 0.3f, 0.3f, 0.3f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse" ), 0.2f, 0.7f, 0.8f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular" ), 0.3f, 0.6f, 0.4f);
-
+        if (noche) {
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.2f, 0.2f, 0.2f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.2f, 0.2f, 0.2f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.2f, 0.2f, 0.2f);
+        }
+        else {
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.5f, 0.5f, 0.5f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.5f, 0.5f, 0.5f);
+            glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.5f, 0.5f, 0.5f);
+        }
 
 
 
@@ -242,14 +261,48 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         red_dog.Draw(lightingShader);
 
+
+        // Set material properties for the llantas
+
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.2f, 0.2f, 0.2f);
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.6f, 0.0f, 0.6f);
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.1f, 0.8f);
         glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.6f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Llantas.Draw(lightingShader);
+
+        // Set material properties for the llave
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.2f, 0.2f, 0.2f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.6f, 0.0f, 0.6f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.1f, 0.8f);
+        glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.6f);
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Llave.Draw(lightingShader);
+
+        // Set material properties for the pistola
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.2f, 0.2f, 0.2f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.6f, 0.0f, 0.6f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.1f, 0.8f);
+        glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.6f);
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        pImpacto.Draw(lightingShader);
+
+        // Set material properties for the desarmador
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.2f, 0.2f, 0.2f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.6f, 0.0f, 0.6f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.1f, 0.8f);
+        glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.6f);
+        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        Desarmador.Draw(lightingShader);
+
+        // Set material properties for the caja de herramientas
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.2f, 0.2f, 0.2f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.6f, 0.0f, 0.6f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.1f, 0.8f);
+        glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.6f);
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         glBindVertexArray(VAO);
-        moto.Draw(lightingShader);
+        CajaH.Draw(lightingShader);
         
         //glDrawArrays(GL_TRIANGLES, 0, 36);
         
@@ -262,20 +315,22 @@ int main()
         lampshader.Use();
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPos + movelightPos);
-        model = glm::scale(model, glm::vec3(0.3f));
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(5.0f, 0.0f, 0.0f));
-        model = glm::translate(model, lightPos + movelightPos);
-        model = glm::scale(model, glm::vec3(0.3f));
-        glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
+        if (noche) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, lightPos + movelightPos);
+            model = glm::scale(model, glm::vec3(0.3f));
+            glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            glBindVertexArray(VAO);
+            
+        }
+        else {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
+            model = glm::translate(model, lightPos + movelightPos);
+            model = glm::scale(model, glm::vec3(0.3f));
+            glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            Sol.Draw(lampshader);
+        }
         glBindVertexArray(0);
 
         // Swap the buffers
@@ -314,11 +369,7 @@ void DoMovement()
         camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 
-    if (activanim)
-    {
-        if (rot > -90.0f)
-            rot -= 0.1f;
-    }
+    
 
 }
 
@@ -352,6 +403,19 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     {
         
         movelightPos -= 0.1f;
+    }
+
+    if (keys[GLFW_KEY_SPACE])
+    {
+        noche = true;
+        //dia = false;
+        //movimiento = true;
+    }
+
+    if (keys[GLFW_KEY_D]) {
+        //dia = true;
+        noche = false;
+        //movimiento = true;
     }
 
 
