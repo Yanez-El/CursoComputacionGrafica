@@ -1,0 +1,36 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 15.09.2024 12:16:53
+
+newmtl Corvette_Wheel_V2_OBJ_Wheel_2_Low_Res
+	Ka 0 0 0
+Ns 8.16617
+Ks 0 0 0
+Kd 0.246259 0.246259 0.246259
+map_Kd Wheel_2_Low_Res.bmp
+newmtl High_Res_Rotor_B
+Ka 0 0 0
+Ns 8.16617
+Ks 1 1 1
+Kd 0.265326 0.265326 0.265326
+map_Kd High_Res_Rotor_B.bmp
+
+newmtl Corvette_Wheel_V2_OBJ_Plastics
+	Ka 0 0 0
+Ns 8.16617
+Ks 1 1 1
+Kd 0.121633 0.120627 0.120627
+map_Kd Plastics.bmp
+
+newmtl Corvette_Wheel_V2_OBJ_Tire
+Ka 0 0 0
+Ns 8.16617
+Ks 0 0 0
+Kd 0.000247471 0.000247471 0.000247471
+map_Kd Tire.bmp
+
+newmtl Corvette_Wheel_V2_OBJ_Silver
+Ka 0 0 0
+Ns 8.16617
+Ks 0 0 0
+Kd 0.513039 0.513039 0.513039
+map_Kd Silver.bmp
