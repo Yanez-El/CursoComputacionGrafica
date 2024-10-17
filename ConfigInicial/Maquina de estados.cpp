@@ -43,6 +43,7 @@ bool firstMouse = true;
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 bool active;
+bool SubeBall;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
@@ -114,6 +115,14 @@ float dogRot = 0.0f;
 bool animRotDog = false;
 bool step = false;
 
+float rotBall = -180.0f;
+float rotDog = 0;
+float movBall = 0;
+bool AnimBall = false;
+bool AnimDog = false;
+bool arriba = true;
+bool abajo = false;
+
 
 
 // Deltatime
@@ -132,7 +141,11 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
+
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion maquina de estados Fernando", nullptr, nullptr);
+
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion basica", nullptr, nullptr);
+
 
 	if (nullptr == window)
 	{
@@ -306,9 +319,12 @@ int main()
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+
 		//Body
 		modelTemp= model = glm::translate(model, dogPos);
 		modelTemp= model = glm::rotate(model, glm::radians(dogRot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotDog), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, movBall, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		DogBody.Draw(lightingShader);
 		//Head
@@ -355,6 +371,8 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.0f, movBall, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	    Ball.Draw(lightingShader); 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
@@ -501,22 +519,31 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		
 	}
 
+
 	if (keys[GLFW_KEY_B])
 	{
 		dogAnim = 1;
 
 	}
 	
+	if (keys[GLFW_KEY_T])
+	{
+		SubeBall = !SubeBall;
+
+	}
 }
 void Animation() {
 	if (AnimBall)
 	{
+
 		rotBall += 0.4f;
+		rotBall -= 0.6f;
 		//printf("%f", rotBall);
 	}
 	
 	if (AnimDog)
 	{
+
 		rotDog -= 0.6f;
 		//printf("%f", rotBall);
 	}
@@ -551,6 +578,39 @@ void Animation() {
 	}
 	
 	
+		rotDog += 0.6f;
+		//printf("%f", rotDog);
+	}
+
+	if ((rotDog - rotBall) == 360.0f)
+	{
+		SubeBall = true;
+
+	}
+	else
+	{
+		//rotDog = 0.0f;
+	}
+
+	if (SubeBall) {
+		if (movBall >= 1.5f && arriba) {
+			movBall -= 0.01f;
+			abajo = true;
+			arriba = false;
+		}
+		else if (movBall <= 0.0f && abajo) {
+			movBall += 0.01f;
+			abajo = false;
+			arriba = true;
+		}
+		else if (arriba) {
+			movBall += 0.01f;
+		}
+		else if (abajo) {
+			movBall -= 0.01f;
+		}
+		printf("%f", movBall);
+	}
 }
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
