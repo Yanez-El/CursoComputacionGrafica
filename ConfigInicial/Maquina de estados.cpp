@@ -542,17 +542,7 @@ void Animation() {
 		}
 		dogPos.z += 0.001f;
 
-		if (dogPos.z > 1.75f) {
-			animRotDog = true;
-			if (animRotDog) {
-				dogRot += 0.09f;
-				dogPos.x += 0.001f;
-			}
-			else if (dogRot > 90.0f) {
-				animRotDog = false;
-			}
-		}
-		else if (dogPos.z > 2.05f) {
+		 if (dogPos.z > 2.05f) {
 			animRotDog = false;
 			dogAnim = 0;
 		}
