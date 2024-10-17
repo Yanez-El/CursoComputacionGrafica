@@ -23,6 +23,9 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Maquina de estados.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Shader\lamp.frag" />
     <None Include="Shader\lamp.vs" />
     <None Include="Shader\lighting.frag" />
