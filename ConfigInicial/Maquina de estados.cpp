@@ -43,6 +43,10 @@ bool firstMouse = true;
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 bool active;
+bool posZAtras;
+bool posXDerecha;
+bool posZAdelante = true;
+bool posXIzquierda;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
@@ -503,8 +507,12 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 
 	if (keys[GLFW_KEY_B])
 	{
-		dogAnim = 1;
-
+		if (dogAnim == 0) {
+			dogAnim = 1;
+		}
+		else {
+			dogAnim = 0;
+		}
 	}
 	
 }
@@ -540,14 +548,73 @@ void Animation() {
 				step = false;
 			}
 		}
-		dogPos.z += 0.001f;
 
-		 if (dogPos.z > 2.05f) {
-			animRotDog = false;
-			dogAnim = 0;
+		if (posZAdelante == true) {
+			dogPos.z += 0.001f;
+			printf("%f\n", dogPos.z);
+			if (dogPos.z > 1.95f && dogPos.z < 2.25f) {
+				dogRot += 0.3f;
+				posXDerecha = true;
+			}
+			else if (dogPos.z > 2.25f) {
+				posZAdelante = false;
+				//dogAnim = 0;
+			}
+		}
+		if (posZAtras == true) {
+					dogPos.z -= 0.001f;
+					printf("%f\n", dogPos.z);
+					if (dogPos.z < -1.75f && dogPos.z > -2.05f) {
+						dogRot += 0.3f;
+						posXIzquierda = true;
+					}
+					else if (dogPos.z < -2.05f) {
+						posZAtras = false;
+						//dogAnim = 0;
+					}
+				}
+			
+			
+
+		if (posXDerecha == true) {
+			dogPos.x += 0.001f;
+			printf("%f\n", dogPos.x);
+			if (dogPos.x > 1.95f && dogPos.x < 2.25f) {
+				dogRot += 0.3f;
+				posZAtras = true;
+			}
+			if (dogPos.x > 2.25f) {
+				posXDerecha = false;
+				//dogAnim = 0;
+			}
 		}
 
-		printf("%f\n", dogPos.z);
+		if (posXIzquierda == true) {
+			dogPos.x -= 0.001f;
+			printf("%f\n", dogPos.x);
+			if (posZAtras == false) {
+				posZAdelante = true;
+				if (dogRot < 315.0f) {
+					dogRot += 0.3f;
+
+				}
+				if (dogPos.x < 0.15f && dogPos.x > 0.0f) {
+					dogRot += 0.3f;
+				}
+				if (dogRot > 360.0f) {
+					dogRot = 0.0f;
+					dogPos.x = 0.0f;
+					posXIzquierda = false;
+					//dogAnim = 0;
+				}
+				//dogAnim = 0;
+			}
+		}
+
+
+		
+
+		
 	}
 	
 	
