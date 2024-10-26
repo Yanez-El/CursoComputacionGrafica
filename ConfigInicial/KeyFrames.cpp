@@ -1,10 +1,11 @@
 /*
 	Práctica 11 Animación por Keyframes
 	Fernando Yañez García
-	22 de octubre de 2024
+	27 de octubre de 2024
 */
 
 #include <iostream>
+#include <fstream>
 #include <cmath>
 
 // GLEW
@@ -123,7 +124,7 @@ float tail = 0.0f;
 //KeyFrames
 float dogPosX , dogPosY , dogPosZ  ;
 
-#define MAX_FRAMES 9
+#define MAX_FRAMES 18
 int i_max_steps = 190;
 int i_curr_steps = 0;
 typedef struct _frame {
@@ -160,6 +161,7 @@ FRAME KeyFrame[MAX_FRAMES];
 int FrameIndex = 0;			//introducir datos
 bool play = false;
 int playIndex = 0;
+
 
 void saveFrame(void)
 {
@@ -220,6 +222,84 @@ void interpolation(void)
 
 }
 
+void existeGuardado(void) {
+	ifstream Guardado("ejemplo.txt");
+	vector<float> datos;  // Arreglo donde guardarás los datos del archivo
+	int j = 0;
+
+	// Verificamos si el archivo existe
+	if (!Guardado.is_open()) {
+		// Si el archivo no existe, lo creamos y llenamos con datos
+		cout << "El archivo no existe. Creando...\n";
+		ofstream archivoEscritura("ejemplo.txt");
+
+		archivoEscritura.close();
+	}
+	else {
+		// Si el archivo existe, leemos los datos y los guardamos en el vector
+		cout << "El archivo ya existe. Leyendo datos...\n";
+		float numero;
+		while (Guardado >> numero) {
+			datos.push_back(numero);
+		}
+
+		Guardado.close();  // Cerramos el archivo después de leer
+
+		// Mostramos los datos leídos
+		cout << "Datos leídos del archivo:\n";
+
+		for (int i = 0; i < datos.size()/12; i++) {
+			 KeyFrame[i].dogPosX = datos[j];
+			 j++;
+			 KeyFrame[i].dogPosY = datos[j];
+			 j++;
+			 KeyFrame[i].dogPosZ = datos[j];
+			 j++;
+			 KeyFrame[i].rotDog = datos[j];
+			 j++;
+			 KeyFrame[i].head = datos[j];
+			 j++;
+			 KeyFrame[i].head2 = datos[j];
+			 j++;
+			 KeyFrame[i].tail = datos[j];
+			 j++;
+			 KeyFrame[i].FLLeg = datos[j];
+			 j++;
+			 KeyFrame[i].FRLeg = datos[j];
+			 j++;
+			 KeyFrame[i].FRLeg2 = datos[j];
+			 j++;
+			 KeyFrame[i].RRLeg = datos[j];
+			 j++;
+			 KeyFrame[i].RLLeg = datos[j];
+			 j++;
+		}
+		cout << datos.size()/12 << "\n";
+		FrameIndex = (datos.size() / 12);
+	}
+
+}
+void llenado(int maximo) {
+	ofstream Creado("ejemplo.txt");
+
+	for (int i = 0; i < maximo; ++i) {
+		Creado << KeyFrame[i].dogPosX << endl;
+		Creado << KeyFrame[i].dogPosY << endl;
+		Creado << KeyFrame[i].dogPosZ << endl;
+		Creado << KeyFrame[i].rotDog << endl;
+		Creado << KeyFrame[i].head << endl;
+		Creado << KeyFrame[i].head2 << endl;
+		Creado << KeyFrame[i].tail << endl;
+		Creado << KeyFrame[i].FLLeg << endl;
+		Creado << KeyFrame[i].FRLeg << endl;
+		Creado << KeyFrame[i].FRLeg2 << endl;
+		Creado << KeyFrame[i].RRLeg << endl;
+		Creado << KeyFrame[i].RLLeg << endl;
+
+	}
+	cout << "Archivo de animacion actualizado\n";
+	Creado.close();
+}
 
 
 // Deltatime
@@ -344,6 +424,8 @@ int main()
 	
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
+	existeGuardado();
+
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -449,7 +531,7 @@ int main()
 		//Body
 		modelTemp= model = glm::translate(model, glm::vec3(dogPosX,dogPosY,dogPosZ));
 		//modelTemp= model = glm::rotate(model, glm::radians(rotDog), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelTemp= model = glm::rotate(model, glm::radians(rotDog), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelTemp= model = glm::rotate(model, glm::radians(rotDog), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		DogBody.Draw(lightingShader);
 		//Head
@@ -582,6 +664,16 @@ void DoMovement()
 	if (keys[GLFW_KEY_J])
 	{
 		dogPosY += 0.01;
+	}
+
+	if (keys[GLFW_KEY_Z])
+	{
+		dogPosX -= 0.01;
+	}
+
+	if (keys[GLFW_KEY_X])
+	{
+		dogPosX += 0.01;
 	}
 
 	if (keys[GLFW_KEY_4])
@@ -761,9 +853,10 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 
 	if (keys[GLFW_KEY_L])
 	{
+		
 		if (play == false && (FrameIndex > 1))
 		{
-
+			llenado(FrameIndex);
 			resetElements();
 			//First Interpolation				
 			interpolation();
